@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Cadastro de Aluno</title>
+	<style>
+		/* Definição de estilos para toda a tabela*/
+		.tabela {
+			border: 1px solid green;
+			width: 70%;
+		}
+		
+		.cabecalho {
+			text-align: center;
+			font: 12px Arial, sans-serif;
+			font-weight: bold;
+			color: Snow;
+			background: #008B45;
+		}
+		/* Definição de estilos para coluna */
+		.primeiro {
+			text-align: center;
+			font: 12px Arial, sans-serif;
+			background: #A2CD5A;
+		}
+		.proximo {
+			font: 12px Arial, sans-serif;
+			text-align: center;
+			background: #BCEE68;
+		}
+</style>
+</h:head>
+<h:body>
+	<h:form id="formulario">
+	    
+		<h1><h:outputText id="titulo" value="Cadastro de Alunos"/> </h1>
+		
+		<h:panelGrid id="dados" columns="2">
+			<h:outputText id="nomeLabel" value="Nome:" />
+			<h:inputText id="nome" label="Nome" value="#{alunoBean.aluno.nome}"
+		       	size="50"	maxlength="50" />
+
+			<h:outputText id="nascimentoLabel" value="Data de Nascimento:" />
+			<h:inputText id="nascimento" required="true"
+				label="Data de Nascimento" value="#{alunoBean.aluno.dataNascimento}"
+				maxlength="10">
+				<f:convertDateTime id="padraoData" pattern="dd/MM/yyyy"
+					timeZone="America/Sao_Paulo" />
+			</h:inputText>
+         <h:outputText id="cursoLabel" value="Curso :"/>
+		<h:selectOneMenu id="cursoNome" value="#{alunoBean.aluno.curso.nome}">
+            <f:selectItem itemLabel="Java Básico" itemValue="Java Básico"/>
+            <f:selectItem itemLabel="Java Web" itemValue="Java Web"/>
+            <f:selectItem itemLabel="JSF" itemValue="JSF"/>
+          </h:selectOneMenu>
+		 
+		</h:panelGrid>
+		<h:commandButton id="cadastrar" value="Cadastrar"
+			action="#{alunoBean.adicionarAluno}" />
+		<h:messages id="msg" />
+	</h:form>
+
+
+	<h2>Lista de alunos</h2>
+	<h:dataTable id="listAlunos" value="#{alunoBean.listAlunos}" var="c"
+		styleClass="tabela"   headerClass="cabecalho"  
+        rowClasses="primeiro,proximo" >
+        
+		<h:column id="columnNome">
+			<f:facet name="header">
+				<h:outputText id="headerNome" value="Nome do Aluno" />
+			</f:facet>
+			<h:outputText id="valorNome" value="#{c.nome}" />
+		</h:column>
+
+		<h:column id="columnDataNascimento">
+			<f:facet name="header">
+				<h:outputText id="headerDataNascimento" value="Data-Nascimento" />
+			</f:facet>
+			<h:outputText id="valorDataNascimento" value="#{c.dataNascimento}">
+				<f:convertDateTime id="padraoDataNascimento" pattern="dd/MM/yyyy"
+					timeZone="America/Sao_Paulo" />
+			</h:outputText>
+		</h:column>
+
+		<h:column id="columnIdade">
+			<f:facet name="header">
+				<h:outputText id="headerIdade" value="Idade" />
+			</f:facet>
+			<h:outputText id="idade" value="#{c.idade}" />
+		</h:column>
+		
+		<h:column id="columnCurso">
+			<f:facet name="header">
+				<h:outputText id="headerCurso" value="Curso Nome" />
+			</f:facet>
+			<h:outputText id="curso" value="#{c.curso.nome}" />
+		</h:column>
+		
+		<h:column id="columnPreco">
+			<f:facet name="header">
+				<h:outputText id="headerPreco" value="Valor" />
+			</f:facet>
+			<h:outputText id="preco" value="#{c.curso.valor}" />
+		</h:column>
+		
+	</h:dataTable>
+</h:body>
+</html>
